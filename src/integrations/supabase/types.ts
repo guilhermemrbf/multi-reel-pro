@@ -349,7 +349,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      owns_row: { Args: { _id: string; _table: string }; Returns: boolean }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
