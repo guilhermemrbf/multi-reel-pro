@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAgendamentosRouteImport } from './routes/_authenticated/agendamentos'
 import { Route as AuthenticatedAgendarRouteImport } from './routes/_authenticated/agendar'
 import { Route as AuthenticatedBibliotecaRouteImport } from './routes/_authenticated/biblioteca'
 import { Route as AuthenticatedContasRouteImport } from './routes/_authenticated/contas'
@@ -31,6 +32,12 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAgendamentosRoute =
+  AuthenticatedAgendamentosRouteImport.update({
+    id: '/agendamentos',
+    path: '/agendamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedAgendarRoute = AuthenticatedAgendarRouteImport.update({
   id: '/agendar',
   path: '/agendar',
@@ -55,6 +62,7 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agendamentos': typeof AuthenticatedAgendamentosRoute
   '/agendar': typeof AuthenticatedAgendarRoute
   '/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/contas': typeof AuthenticatedContasRoute
@@ -63,6 +71,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agendamentos': typeof AuthenticatedAgendamentosRoute
   '/agendar': typeof AuthenticatedAgendarRoute
   '/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/contas': typeof AuthenticatedContasRoute
@@ -73,6 +82,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/agendamentos': typeof AuthenticatedAgendamentosRoute
   '/_authenticated/agendar': typeof AuthenticatedAgendarRoute
   '/_authenticated/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/_authenticated/contas': typeof AuthenticatedContasRoute
@@ -81,14 +91,28 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/auth' | '/agendar' | '/biblioteca' | '/contas' | '/dashboard'
+    | '/'
+    | '/auth'
+    | '/agendamentos'
+    | '/agendar'
+    | '/biblioteca'
+    | '/contas'
+    | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/agendar' | '/biblioteca' | '/contas' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/agendamentos'
+    | '/agendar'
+    | '/biblioteca'
+    | '/contas'
+    | '/dashboard'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/agendamentos'
     | '/_authenticated/agendar'
     | '/_authenticated/biblioteca'
     | '/_authenticated/contas'
@@ -124,6 +148,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/agendamentos': {
+      id: '/_authenticated/agendamentos'
+      path: '/agendamentos'
+      fullPath: '/agendamentos'
+      preLoaderRoute: typeof AuthenticatedAgendamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/agendar': {
       id: '/_authenticated/agendar'
       path: '/agendar'
@@ -156,6 +187,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAgendamentosRoute: typeof AuthenticatedAgendamentosRoute
   AuthenticatedAgendarRoute: typeof AuthenticatedAgendarRoute
   AuthenticatedBibliotecaRoute: typeof AuthenticatedBibliotecaRoute
   AuthenticatedContasRoute: typeof AuthenticatedContasRoute
@@ -163,6 +195,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAgendamentosRoute: AuthenticatedAgendamentosRoute,
   AuthenticatedAgendarRoute: AuthenticatedAgendarRoute,
   AuthenticatedBibliotecaRoute: AuthenticatedBibliotecaRoute,
   AuthenticatedContasRoute: AuthenticatedContasRoute,
