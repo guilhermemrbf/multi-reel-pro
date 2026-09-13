@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAgendamentosRouteImport } from './routes/_authenticated/agendamentos'
+import { Route as AuthenticatedAgendarRouteImport } from './routes/_authenticated/agendar'
 import { Route as AuthenticatedBibliotecaRouteImport } from './routes/_authenticated/biblioteca'
 import { Route as AuthenticatedContasRouteImport } from './routes/_authenticated/contas'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedLegendasRouteImport } from './routes/_authenticated/legendas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +32,17 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAgendamentosRoute =
+  AuthenticatedAgendamentosRouteImport.update({
+    id: '/agendamentos',
+    path: '/agendamentos',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAgendarRoute = AuthenticatedAgendarRouteImport.update({
+  id: '/agendar',
+  path: '/agendar',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBibliotecaRoute = AuthenticatedBibliotecaRouteImport.update({
   id: '/biblioteca',
@@ -45,43 +59,76 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedLegendasRoute = AuthenticatedLegendasRouteImport.update({
+  id: '/legendas',
+  path: '/legendas',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agendamentos': typeof AuthenticatedAgendamentosRoute
+  '/agendar': typeof AuthenticatedAgendarRoute
   '/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/contas': typeof AuthenticatedContasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/legendas': typeof AuthenticatedLegendasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/agendamentos': typeof AuthenticatedAgendamentosRoute
+  '/agendar': typeof AuthenticatedAgendarRoute
   '/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/contas': typeof AuthenticatedContasRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/legendas': typeof AuthenticatedLegendasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/agendamentos': typeof AuthenticatedAgendamentosRoute
+  '/_authenticated/agendar': typeof AuthenticatedAgendarRoute
   '/_authenticated/biblioteca': typeof AuthenticatedBibliotecaRoute
   '/_authenticated/contas': typeof AuthenticatedContasRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/legendas': typeof AuthenticatedLegendasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/biblioteca' | '/contas' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/agendamentos'
+    | '/agendar'
+    | '/biblioteca'
+    | '/contas'
+    | '/dashboard'
+    | '/legendas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/biblioteca' | '/contas' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/agendamentos'
+    | '/agendar'
+    | '/biblioteca'
+    | '/contas'
+    | '/dashboard'
+    | '/legendas'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/agendamentos'
+    | '/_authenticated/agendar'
     | '/_authenticated/biblioteca'
     | '/_authenticated/contas'
     | '/_authenticated/dashboard'
+    | '/_authenticated/legendas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -113,6 +160,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/agendamentos': {
+      id: '/_authenticated/agendamentos'
+      path: '/agendamentos'
+      fullPath: '/agendamentos'
+      preLoaderRoute: typeof AuthenticatedAgendamentosRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/agendar': {
+      id: '/_authenticated/agendar'
+      path: '/agendar'
+      fullPath: '/agendar'
+      preLoaderRoute: typeof AuthenticatedAgendarRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/biblioteca': {
       id: '/_authenticated/biblioteca'
       path: '/biblioteca'
@@ -134,19 +195,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/legendas': {
+      id: '/_authenticated/legendas'
+      path: '/legendas'
+      fullPath: '/legendas'
+      preLoaderRoute: typeof AuthenticatedLegendasRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAgendamentosRoute: typeof AuthenticatedAgendamentosRoute
+  AuthenticatedAgendarRoute: typeof AuthenticatedAgendarRoute
   AuthenticatedBibliotecaRoute: typeof AuthenticatedBibliotecaRoute
   AuthenticatedContasRoute: typeof AuthenticatedContasRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedLegendasRoute: typeof AuthenticatedLegendasRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAgendamentosRoute: AuthenticatedAgendamentosRoute,
+  AuthenticatedAgendarRoute: AuthenticatedAgendarRoute,
   AuthenticatedBibliotecaRoute: AuthenticatedBibliotecaRoute,
   AuthenticatedContasRoute: AuthenticatedContasRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedLegendasRoute: AuthenticatedLegendasRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
